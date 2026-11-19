@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simulateur Tarif Crèche CAF — Barème PSU 2026</title>
+  <title>Simulateur Tarif Crèche CAF — Barème PSU</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -389,7 +389,6 @@
       font-weight: 600;
     }
 
-    /* Résultats */
     .hero-result {
       background: linear-gradient(145deg, #0f172a, #1e3a8a);
       color: #fff;
@@ -597,7 +596,7 @@
         </div>
       </div>
       <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-        <span class="pill">Barème PSU 2026</span>
+        <span class="pill" id="baremeBadge">Barème PSU</span>
         <button type="button" class="btn-reset" id="btnReset">Réinitialiser</button>
       </div>
     </header>
@@ -611,11 +610,11 @@
             <div class="control-header">
               <label for="cafIncomeSlider">Revenus annuels de référence CAF (N-2)</label>
               <div class="value-box">
-                <input type="number" id="cafIncomeNum" class="wide" min="0" max="300000" step="100" value="76094" />
+                <input type="number" id="cafIncomeNum" class="wide" min="0" max="300000" step="100" value="45000" />
                 <span>€ / an</span>
               </div>
             </div>
-            <input type="range" id="cafIncomeSlider" min="0" max="180000" step="250" value="76094" />
+            <input type="range" id="cafIncomeSlider" min="0" max="180000" step="250" value="45000" />
             <div class="range-bounds">
               <span>0 €</span>
               <span>60 000 €</span>
@@ -623,7 +622,7 @@
               <span>180 000 €+</span>
             </div>
             <div class="sub-summary">
-              <span>Équivalent mensuel (÷ 12) : <strong id="monthlyRawIncome">6 341,17 € / mois</strong></span>
+              <span>Équivalent mensuel (÷ 12) : <strong id="monthlyRawIncome">3 750,00 € / mois</strong></span>
               <span class="tag ok" id="capBadge">Dans l'assiette</span>
             </div>
             <p class="hint">
@@ -635,11 +634,11 @@
             <div class="control-header">
               <label for="childrenSlider">Nombre d'enfants à charge</label>
               <div class="value-box">
-                <input type="number" id="childrenNum" min="1" max="10" step="1" value="2" />
+                <input type="number" id="childrenNum" min="1" max="10" step="1" value="1" />
                 <span>enfant(s)</span>
               </div>
             </div>
-            <input type="range" id="childrenSlider" min="1" max="8" step="1" value="2" />
+            <input type="range" id="childrenSlider" min="1" max="8" step="1" value="1" />
             <div class="range-bounds">
               <span>1</span>
               <span>2</span>
@@ -652,11 +651,11 @@
             </div>
 
             <div class="toggle-row" role="group" aria-label="Type de structure d'accueil">
-              <button type="button" class="choice-btn" id="btnCollective" aria-pressed="false">
+              <button type="button" class="choice-btn active" id="btnCollective" aria-pressed="true">
                 Crèche collective
                 <span>Taux de référence du rang</span>
               </button>
-              <button type="button" class="choice-btn active" id="btnParental" aria-pressed="true">
+              <button type="button" class="choice-btn" id="btnParental" aria-pressed="false">
                 Crèche parentale
                 <span>Décalé d'1 cran vers le bas</span>
               </button>
@@ -698,11 +697,11 @@
             <div class="control-header">
               <label for="hoursMonthSlider">Heures réservées par mois</label>
               <div class="value-box">
-                <input type="number" id="hoursMonthNum" min="1" max="260" step="1" value="147" />
+                <input type="number" id="hoursMonthNum" min="1" max="260" step="1" value="140" />
                 <span>h / mois</span>
               </div>
             </div>
-            <input type="range" id="hoursMonthSlider" min="10" max="220" step="1" value="147" />
+            <input type="range" id="hoursMonthSlider" min="10" max="220" step="1" value="140" />
             <div class="range-bounds">
               <span>10 h</span>
               <span>60 h</span>
@@ -762,19 +761,19 @@
         <div class="hero-result">
           <div class="hero-top">
             <div class="hero-label">Votre estimation PSU</div>
-            <span class="structure-pill" id="structureBadge">Crèche parentale (rang +1)</span>
+            <span class="structure-pill" id="structureBadge">Crèche collective (rang standard)</span>
           </div>
-          <div class="main-amount" id="monthlyCost">385,14 € <span style="font-size:1rem; font-weight:500;">/ mois</span></div>
-          <div class="sub-amount" id="annualCost">Soit environ 4 621,68 € par an</div>
+          <div class="main-amount" id="monthlyCost">324,98 € <span style="font-size:1rem; font-weight:500;">/ mois</span></div>
+          <div class="sub-amount" id="annualCost">Soit environ 3 899,70 € par an</div>
 
           <div class="kpi-grid">
             <div class="kpi">
               <div class="k-label">Tarif horaire PSU</div>
-              <div class="k-val" id="hourlyRate">2,62 € / h</div>
+              <div class="k-val" id="hourlyRate">2,32 € / h</div>
             </div>
             <div class="kpi">
               <div class="k-label">Taux d'effort appliqué</div>
-              <div class="k-val" id="effortRateDisplay">0,0413 %</div>
+              <div class="k-val" id="effortRateDisplay">0,0619 %</div>
             </div>
           </div>
 
@@ -786,8 +785,8 @@
               </label>
             </div>
             <div id="taxCreditDetails" style="display:none;">
-              <div class="tax-net" id="netMonthlyCost">192,57 € / mois net</div>
-              <div class="tax-note" id="taxSavingsNote">Crédit d'impôt estimé : -192,57 € / mois (50 % dans la limite de 3 500 € de dépenses/an).</div>
+              <div class="tax-net" id="netMonthlyCost">179,15 € / mois net</div>
+              <div class="tax-note" id="taxSavingsNote"></div>
             </div>
           </div>
         </div>
@@ -797,10 +796,10 @@
           <div class="meter-wrap">
             <div style="display:flex; justify-content:space-between; font-size:0.88rem; font-weight:700;">
               <span>Assiette plafonnée / planchée</span>
-              <span id="cappedBaseText">6 341,17 € / mois</span>
+              <span id="cappedBaseText">3 750,00 € / mois</span>
             </div>
             <div class="meter-bar">
-              <div class="meter-fill" id="capMeterFill" style="width:74%;"></div>
+              <div class="meter-fill" id="capMeterFill" style="width:38%;"></div>
             </div>
             <div class="meter-labels">
               <span id="floorLabel">Plancher : 814,62 €</span>
@@ -815,40 +814,40 @@
           <ul class="breakdown-list">
             <li>
               <span>Type de structure</span>
-              <strong id="detailStructure">Crèche parentale (décalé -1 cran)</strong>
+              <strong id="detailStructure">Crèche collective (taux de base)</strong>
             </li>
             <li>
               <span>Revenus annuels CAF (N-2)</span>
-              <strong id="detailAnnualIncome">76 094,00 € / an</strong>
+              <strong id="detailAnnualIncome">45 000,00 € / an</strong>
             </li>
             <li>
               <span>Équivalent mensuel (÷ 12)</span>
-              <strong id="detailRawMonthly">6 341,17 € / mois</strong>
+              <strong id="detailRawMonthly">3 750,00 € / mois</strong>
             </li>
             <li>
               <span>Assiette retenue (encadrée)</span>
-              <strong id="detailCappedMonthly">6 341,17 € / mois</strong>
+              <strong id="detailCappedMonthly">3 750,00 € / mois</strong>
             </li>
             <li>
               <span>Rang tarifaire effectif</span>
-              <strong id="detailEffectiveRank">3 enfants (crèche parentale)</strong>
+              <strong id="detailEffectiveRank">1 enfant</strong>
             </li>
             <li>
               <span>Formule tarif horaire</span>
-              <strong id="detailFormula">6 341,17 € × 0,0413 %</strong>
+              <strong id="detailFormula">3 750,00 € × 0,0619 %</strong>
             </li>
             <li>
               <span>Volume horaire mensuel</span>
-              <strong id="detailHours">147,00 h / mois</strong>
+              <strong id="detailHours">140,00 h / mois</strong>
             </li>
           </ul>
 
           <div style="margin-top:16px;">
             <div class="section-title" style="margin-bottom:8px; font-size:0.92rem;">
-              <span>Grille officielle des taux d'effort PSU 2026</span>
+              <span>Grille officielle des taux d'effort PSU</span>
               <span style="font-size:0.75rem; font-weight:500; color:var(--muted);">Surbrillance = situation active</span>
             </div>
-            <table class="rate-table" aria-label="Grille des taux d'effort PSU 2026">
+            <table class="rate-table" aria-label="Grille des taux d'effort PSU">
               <thead>
                 <tr>
                   <th>Enfants à charge</th>
@@ -859,7 +858,7 @@
               <tbody id="rateTableBody"></tbody>
             </table>
             <p class="hint" style="margin-top:8px;">
-              Chaque critère de majoration (crèche parentale, parent isolé, enfant bénéficiaire AEEH) décale le taux d'effort d'un rang vers le bas, dans la limite du taux plancher de <strong>0,0206 %</strong>.
+              Chaque critère de majoration (crèche parentale, parent isolé, enfant bénéficiaire AEEH) décale le taux d'effort d'un rang vers le bas, dans la limite du taux plancher de <strong id="minRateHint">0,0206 %</strong>.
             </p>
           </div>
         </div>
@@ -867,43 +866,59 @@
     </div>
 
     <div class="disclaimer">
-      <strong>Avertissement réglementaire &amp; Confidentialité :</strong> Cette simulation est fournie à titre strictement indicatif sur la base du barème national CNAF (Prestation de Service Unique — PSU 2026) applicable aux établissements d'accueil du jeune enfant (EAJE) en accueil collectif et en crèche parentale. Le tarif horaire définitif est établi par le gestionnaire de votre crèche à partir de vos revenus annuels de référence N-2 consultés sur la base CAF (service CDAP), du contrat d'accueil mensualisé et des dispositions du règlement de fonctionnement. Aucune donnée saisie n'est enregistrée ni transmise à un serveur.
+      <strong>Avertissement réglementaire &amp; Confidentialité :</strong> Cette simulation est fournie à titre strictement indicatif sur la base du barème national CNAF (Prestation de Service Unique — PSU) applicable aux établissements d'accueil du jeune enfant (EAJE) en accueil collectif et en crèche parentale. Le tarif horaire définitif est établi par le gestionnaire de votre crèche à partir de vos revenus annuels de référence N-2 consultés sur la base CAF (service CDAP), du contrat d'accueil mensualisé et des dispositions du règlement de fonctionnement. Aucune donnée saisie n'est enregistrée ni transmise à un serveur.
     </div>
   </div>
 
+  <!-- Fichier config.js optionnel à la racine du dépôt pour modifier les paramètres sans toucher à index.html -->
+  <script src="config.js"></script>
   <script>
-    const EFFORT_RATES = [
-      0.000619,
-      0.000516,
-      0.000413,
-      0.000310,
-      0.000310,
-      0.000310,
-      0.000310,
-      0.000206
-    ];
+    const CFG = window.SIMULATOR_CONFIG || {};
+
+    const BAREME_LABEL = CFG.baremeLabel || "Barème PSU 2026";
+    const FLOOR_MONTHLY = typeof CFG.floorMonthly === "number" ? CFG.floorMonthly : 814.62;
+    const CAP_MONTHLY = typeof CFG.capMonthly === "number" ? CFG.capMonthly : 8500;
+    const TAX_CREDIT_RATE = CFG.taxCredit && typeof CFG.taxCredit.rate === "number" ? CFG.taxCredit.rate : 0.5;
+    const TAX_CREDIT_CAP_PER_CHILD =
+      CFG.taxCredit && typeof CFG.taxCredit.annualCapPerChild === "number" ? CFG.taxCredit.annualCapPerChild : 3500;
+
+    const EFFORT_RATES = Array.isArray(CFG.effortRates) && CFG.effortRates.length === 8
+      ? CFG.effortRates
+      : [
+          0.000619,
+          0.000516,
+          0.000413,
+          0.000310,
+          0.000310,
+          0.000310,
+          0.000310,
+          0.000206
+        ];
 
     const DEFAULTS = {
-      cafAnnualIncome: 76094,
-      children: 2,
-      parentalCare: true,
+      cafAnnualIncome: 45000,
+      children: 1,
+      parentalCare: false,
       singleParent: false,
       aeeh: false,
       mode: "monthly",
-      hoursMonth: 147,
+      hoursMonth: 140,
       days: [8, 8, 8, 8, 8],
-      floor: 814.62,
-      cap: 8500,
+      floor: FLOOR_MONTHLY,
+      cap: CAP_MONTHLY,
       weeks: 47,
-      taxCredit: false
+      taxCredit: false,
+      ...(CFG.defaults || {})
     };
 
     const state = {
       ...DEFAULTS,
-      days: [...DEFAULTS.days]
+      days: [...(DEFAULTS.days || [8, 8, 8, 8, 8])]
     };
 
     const el = {
+      baremeBadge: document.getElementById("baremeBadge"),
+      minRateHint: document.getElementById("minRateHint"),
       cafIncomeSlider: document.getElementById("cafIncomeSlider"),
       cafIncomeNum: document.getElementById("cafIncomeNum"),
       monthlyRawIncome: document.getElementById("monthlyRawIncome"),
@@ -1073,12 +1088,13 @@
 
       el.taxCreditDetails.style.display = state.taxCredit ? "block" : "none";
       if (state.taxCredit) {
-        const eligibleAnnualExpenses = Math.min(annualTotal, 3500 * state.children);
-        const annualCredit = eligibleAnnualExpenses * 0.5;
+        const capAnnual = TAX_CREDIT_CAP_PER_CHILD * state.children;
+        const eligibleAnnualExpenses = Math.min(annualTotal, capAnnual);
+        const annualCredit = eligibleAnnualExpenses * TAX_CREDIT_RATE;
         const monthlyCredit = annualCredit / 12;
         const netMonthly = Math.max(0, monthlyTotal - monthlyCredit);
         el.netMonthlyCost.textContent = `${fmtEur(netMonthly)} / mois net`;
-        el.taxSavingsNote.textContent = `Crédit d'impôt estimé : -${fmtEur(monthlyCredit)} / mois (50 % dans la limite de ${fmtEur(3500 * state.children)} de dépenses/an).`;
+        el.taxSavingsNote.textContent = `Crédit d'impôt estimé : -${fmtEur(monthlyCredit)} / mois (${Math.round(TAX_CREDIT_RATE * 100)} % dans la limite de ${fmtEur(capAnnual)} de dépenses/an).`;
       }
 
       const tags = [];
@@ -1101,6 +1117,9 @@
     }
 
     function syncControlsFromState() {
+      el.baremeBadge.textContent = BAREME_LABEL;
+      el.minRateHint.textContent = fmtRatePct(EFFORT_RATES[EFFORT_RATES.length - 1]);
+
       el.cafIncomeSlider.value = Math.min(180000, state.cafAnnualIncome);
       el.cafIncomeNum.value = state.cafAnnualIncome;
       el.childrenSlider.value = Math.min(8, state.children);
@@ -1231,7 +1250,7 @@
 
     el.btnReset.addEventListener("click", () => {
       Object.assign(state, DEFAULTS);
-      state.days = [...DEFAULTS.days];
+      state.days = [...(DEFAULTS.days || [8, 8, 8, 8, 8])];
       syncControlsFromState();
     });
 
